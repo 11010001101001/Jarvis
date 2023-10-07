@@ -1,0 +1,14 @@
+fuzzywuzzy
+googletrans
+inflect
+openai
+playsound
+pvporcupine
+pvrecorder
+PyAudio
+pynput
+Requests
+sounddevice
+torch
+vosk
+wikipedia
