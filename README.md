@@ -8,7 +8,7 @@ As I am studying python, i made a challenge for myself: i decided to make my own
 
 
 
-# Start
+## Start
  - please configure CONFIG file first
  - go to .../Jarvis/VoiceAssistant/Body directory in terminal
  - launch Jarvis with command "python3 Launcher.py"
@@ -17,7 +17,7 @@ As I am studying python, i made a challenge for myself: i decided to make my own
 
 I will be glad if Jarvis will be useful for someone else 🌚
 
-# ☕️🙈
+## ☕️🙈
 - **TON**: UQCQclFDQnQkHI4bJETisvn4QAZevjMWx5mjC3AErZaXvhlU
 - **USDT**: TSiRAGH2apuygsgYP7Q9mS48WN4gDS6D5o
 - **BTC**: 1HCZ7KsmVoiDrvPpnZ5jLQPp7mi7xWR7fi
