@@ -211,7 +211,8 @@ class CommandsHandler(Tracer):
 
     @wrapper
     def get_ip(self):
-        os.system('ipconfig getifaddr en0')
+        ip = os.popen('ipconfig getifaddr en0').read()
+        self.log(ip)
 
     @wrapper
     def stop_mr_mother(self):
