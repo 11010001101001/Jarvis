@@ -60,7 +60,8 @@ class CommandsHandler(Tracer):
             # 'что такое': self.get_definition, gptProxy for now 
             'поиск': self.open_search,
             'погода': self.get_weather,
-            'спасибо': self.thank
+            'спасибо': self.thank,
+            'крипта': self.get_wallets
         }
 
     def start_speechRecognizer(self, stream):
@@ -240,3 +241,6 @@ class CommandsHandler(Tracer):
                     pass
 
         search()
+
+    def get_wallets(self):
+        self.log(CRYPTO)
