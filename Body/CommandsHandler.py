@@ -61,7 +61,8 @@ class CommandsHandler(Tracer):
             'поиск': self.open_search,
             'погода': self.get_weather,
             'спасибо': self.thank,
-            'крипта': self.get_wallets
+            'крипта': self.get_wallets,
+            'ожидание': self.wait,
         }
 
     def start_speechRecognizer(self, stream):
@@ -243,5 +244,22 @@ class CommandsHandler(Tracer):
 
         search()
 
+    @wrapper
     def get_wallets(self):
         self.log(CRYPTO)
+
+    @wrapper
+    def wait(self):
+        self.sound_manager.speak('сделаю вид, что ничего не слышу на 30 минут 💤')
+
+        old_time = time.time()
+        delay_sec = 1800
+
+        while True:
+            current_time = time.time()
+
+            if current_time - old_time > delay_sec:
+                self.sound_manager.speak('и я снова тут ✅')
+                break
+            else:
+                time.sleep(1)
