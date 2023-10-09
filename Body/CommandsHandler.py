@@ -45,9 +45,9 @@ class CommandsHandler(Tracer):
         self.configure_commands()
         wikipedia.set_lang('ru')
 
-        self.thirty_min = 1800
         self.ten_min = 600
-        self.twenty_min = ten_min * 2
+        self.twenty_min = 1200
+        self.thirty_min = 1800
 
     def configure_commands(self):
         self.commands = {
