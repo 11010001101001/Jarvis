@@ -267,7 +267,7 @@ class CommandsHandler(Tracer):
 
     @wrapper
     def wait(self):
-        print('режим ожидания активирован на 30 минут 💤')
+        self.log('режим ожидания активирован на 30 минут 💤')
         old_time = time.time()
         ten_min = 600
         twenty_min = ten_min * 2
