@@ -45,6 +45,10 @@ class CommandsHandler(Tracer):
         self.configure_commands()
         wikipedia.set_lang('ru')
 
+        self.thirty_min = 1800
+        self.ten_min = 600
+        self.twenty_min = ten_min * 2
+
     def configure_commands(self):
         self.commands = {
             'режим работы': self.enable_work_mode,
@@ -268,23 +272,20 @@ class CommandsHandler(Tracer):
     @wrapper
     def wait(self):
         self.sound_manager.speak('режим ожидания активирован на 30 минут 💤')
-
         old_time = time.time()
-        delay_sec = 1800
-        ten_min = 600
-        twenty_min = ten_min * 2
 
         while True:
             current_time = time.time()
             dif = current_time - old_time
 
-            if dif > delay_sec:
-                self.sound_manager.speak('и я снова тут ✅')
-                self.restart_wakeWordDetector()
-                break
-            else:
-                if dif % ten_min == 0:
+            match dif:
+                case self.ten_min:
                     self.log('в ожидании 10 минут...💤')
-                elif dif % twenty_min == 0:
+                case self.twenty_min:
                     self.log('в ожидании 20 минут, скоро пробуждение...🌻')
-                time.sleep(1)
+                case self.thirty_min:
+                    self.sound_manager.speak('и я снова тут ✅')
+                    self.restart_wakeWordDetector()
+                    break
+
+            time.sleep(1)
