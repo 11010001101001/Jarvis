@@ -282,7 +282,7 @@ class CommandsHandler(Tracer):
             elif dif == twenty_min:
                 self.log('в ожидании 20 минут, скоро пробуждение...🌻')
             elif dif == thirty_min:
-                self.log('и я снова тут ✅')
+                self.sound_manager.speak('и я снова тут ✅')
                 self.restart_wakeWordDetector()
                 break
 
