@@ -267,16 +267,24 @@ class CommandsHandler(Tracer):
 
     @wrapper
     def wait(self):
-        self.sound_manager.speak('сделаю вид, что ничего не слышу на 30 минут 💤')
+        self.sound_manager.speak('режим ожидания активирован на 30 минут 💤')
 
         old_time = time.time()
         delay_sec = 1800
+        ten_min = 600
+        twenty_min = ten_min * 2
 
         while True:
             current_time = time.time()
+            dif = current_time - old_time
 
-            if current_time - old_time > delay_sec:
+            if dif > delay_sec:
                 self.sound_manager.speak('и я снова тут ✅')
+                self.restart_wakeWordDetector()
                 break
             else:
+                if dif % ten_min == 0:
+                    self.log('в ожидании 10 минут...💤')
+                elif dif % twenty_min == 0:
+                    self.log('в ожидании 20 минут, скоро пробуждение...🌻')
                 time.sleep(1)
