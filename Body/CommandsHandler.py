@@ -199,12 +199,29 @@ class CommandsHandler(Tracer):
         url = f'http://api.weatherstack.com/current?access_key={WEATHER_KEY}\({city})'
         weather_data = requests.get(url).json()
         temp = round(weather_data['current']['temperature'])
+        temp_right_ending = self.get_ending(str(temp), 'градус')
         feels_like = str(round(weather_data['current']['feelslike']))
         feels_like_prepared = feels_like.replace('-', 'минус ') if '-' in feels_like else feels_like
         common_en = weather_data['current']['weather_descriptions']
         common_ru = self.translator.translate(common_en[0], 'ru').text.lower()
         self.sound_manager.speak(
-            f'📍 {address} \nСейчас {common_ru}, {temp} градусов, ощущается как {feels_like_prepared}')
+            f'📍 {address} \nСейчас {common_ru}, {temp_right_ending}, ощущается как {feels_like_prepared}')
+
+    def get_ending(self, num: str, root: str):
+        last = num[-1:]
+        twenties = abs(int(num)) in range(10, 21)
+
+        if twenties:
+            ending = 'ов'
+        else:
+            if last == '1':
+                ending = ''
+            elif last in map(lambda el: str(el), list(range(2, 5))):
+                ending = 'a'
+            else:
+                ending = 'ов'
+
+        return f'{num} {root}{ending}'
 
     @wrapper
     def run_mr_mother(self):
