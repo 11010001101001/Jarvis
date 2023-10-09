@@ -217,7 +217,7 @@ class CommandsHandler(Tracer):
             if last == '1':
                 ending = ''
             elif last in map(lambda el: str(el), list(range(2, 5))):
-                ending = 'a'
+                ending = 'а'
             else:
                 ending = 'ов'
 
