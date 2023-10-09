@@ -150,7 +150,7 @@ class CommandsHandler(Tracer):
             if 'Terminal' not in app:
                 os.system(f'pkill -x "{app.strip()}"')
                 self.log(f'закрываю {app.strip()}...')
-        self.sound_manager.speak('рабочий отдыха активирован ✅')
+        self.sound_manager.speak('режим отдыха активирован ✅')
 
     @wrapper
     def open_search(self):
