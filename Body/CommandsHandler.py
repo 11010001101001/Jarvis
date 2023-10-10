@@ -198,14 +198,19 @@ class CommandsHandler(Tracer):
         address = my_geo.geojson['features'][0]['properties']['address']
         url = f'http://api.weatherstack.com/current?access_key={WEATHER_KEY}\({city})'
         weather_data = requests.get(url).json()
+
         temp = round(weather_data['current']['temperature'])
         temp_right_ending = self.get_ending(str(temp), 'градус')
+        temp_prepared = temp_right_ending.replace('-', 'минус ') if '-' in temp_right_ending else temp_right_ending
+
         feels_like = str(round(weather_data['current']['feelslike']))
         feels_like_prepared = feels_like.replace('-', 'минус ') if '-' in feels_like else feels_like
+
         common_en = weather_data['current']['weather_descriptions']
         common_ru = self.translator.translate(common_en[0], 'ru').text.lower()
+
         self.sound_manager.speak(
-            f'📍 {address} \nСейчас {common_ru}, {temp_right_ending}, ощущается как {feels_like_prepared}')
+            f'📍 {address} \nСейчас {common_ru}, {temp_prepared}, ощущается как {feels_like_prepared}')
 
     def get_ending(self, num: str, root: str):
         last = num[-1:]
