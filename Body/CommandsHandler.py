@@ -115,24 +115,28 @@ class CommandsHandler(Tracer):
         os.chdir(f'{WORKING_DIR}')
         git_status_info = os.popen('git status').read().splitlines()
         marker = 'On branch '
+        current_branch = ''
 
         for line in git_status_info:
             if marker in line:
                 current_branch = line.replace(marker, '')
-                self.log(f'запоминаю текущую ветку: {current_branch} 🌚')
-                self.log(f'обновляю master и release 🏎️')
-
-                for b in ['release', 'master']:
-                    os.system(f'git checkout {b}')
-                    os.system('git fetch')
-                    os.system('git pull')
-
-                self.log(f'возвращаюсь на текущую ветку: {current_branch} 🏎️')
-                os.system(f'git checkout {current_branch}')
-                os.chdir(f'{ROOT_DIR}')
-                self.log(f'готово ✅')
-
                 break
+
+        if len(current_branch) > 0:
+            self.log(f'запоминаю текущую ветку: {current_branch} 🌚')
+            self.log(f'обновляю master и release 🏎️')
+
+            for b in ['release', 'master']:
+                os.system(f'git checkout {b}')
+                os.system('git fetch')
+                os.system('git pull')
+
+            self.log(f'возвращаюсь на текущую ветку: {current_branch} 🏎️')
+            os.system(f'git checkout {current_branch}')
+            os.chdir(f'{ROOT_DIR}')
+            self.log(f'готово ✅')
+        else:
+            self.sound_manager.speak('какая то ошибка с определением рабочей ветки ⛔️')
 
     @wrapper
     def enable_work_mode(self):
