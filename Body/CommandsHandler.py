@@ -111,18 +111,31 @@ class CommandsHandler(Tracer):
                 self.gpt_proxy.proceed(self.recognized_str)
             self.start_speechRecognizer(stream)
 
+    def update_branches(self):
+        os.chdir(f'{WORKING_DIR}')
+        git_status_info = os.popen('git status').read().splitlines()
+        marker = 'On branch '
+
+        for line in git_status_info:
+            if marker in line:
+                current_branch = line.replace(marker, '')
+                self.log(f'запоминаю текущую ветку: {current_branch} 🌚')
+                self.log(f'обновляю master и release 🏎️')
+
+                for b in ['release', 'master']:
+                    os.system(f'git checkout {b}')
+                    os.system('git fetch')
+                    os.system('git pull')
+
+                self.log(f'возвращаюсь на текущую ветку: {current_branch} 🏎️')
+                os.system(f'git checkout {current_branch}')
+                os.chdir(f'{ROOT_DIR}')
+                self.log(f'готово ✅')
+
+                break
+
     @wrapper
     def enable_work_mode(self):
-        def update_branches():
-            self.log(f'обновляю master и release...')
-            os.chdir(f'{WORKING_DIR}')
-            for b in ['release', 'master']:
-                os.system(f'git checkout {b}')
-                os.system('git fetch')
-                os.system('git pull')
-            os.chdir(f'{ROOT_DIR}')
-            self.log(f'готово 🤙🏼')
-
         work_apps = [
             'Xcode',
             'Simulator',
@@ -133,12 +146,13 @@ class CommandsHandler(Tracer):
             "Cisco Jabber"
         ]
 
+        self.update_branches()
+
         for app in work_apps:
             os.system(f'open -a "{app.strip()}"')
             self.log(f'открываю {app.strip()}...')
             time.sleep(1)
 
-        update_branches()
         self.sound_manager.speak('рабочий режим активирован ✅')
 
     @wrapper
