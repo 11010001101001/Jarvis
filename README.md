@@ -13,7 +13,7 @@ As I am studying python, i made a challenge for myself: i decided to make my own
 
 ## Commands 🫡
 - режим работы (work mode)
-- режим Отдыха (rest mode)
+- режим отдыха (rest mode)
 - Спящий режим (sleep mode)
 - Перезагрузка (reboot)
 - Выключение (turn off)
