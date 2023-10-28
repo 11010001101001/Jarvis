@@ -2,7 +2,7 @@
 
 ![female-robot-with-face-mask-words-name-robot_662214-117386](https://github.com/fresh-Blood/Jarvis/assets/88098218/d992f6fb-7ccc-4eca-9a15-e1827703d364)
 
-Jarvis is an intelligent voice assistant, a command-line python app with default settings for russian usage for personal convenience using gpt+SELERO+VOSK+pvporcupine neural networks.
+Jarvis is an intelligent voice assistant, a command-line python app with default settings in russian for personal convenience using gpt+SELERO+VOSK+pvporcupine neural networks.
 How it was born? I was inspired by Haudi Ho developer and his voice assistant youtube videos. Thanks him a lot. 
 As I am studying python, i made a challenge for myself: i decided to make my own voice assistant using only names of neural networks Haudi used. No source code, all by myself.
 
@@ -27,7 +27,8 @@ As I am studying python, i made a challenge for myself: i decided to make my own
 - Стоп мать (stop mrMother bot)
 - Айпи адрес (ip adress)
 - крипта (crypto (returns my wallets))
-- Ожидание (stand by (1 hour))
+- Ожидание (stand by for 2 hours)
+- Удали почту ( clean mail )
   ~ if command not in list -> GPT flow
 
 ## Preview ▶️
