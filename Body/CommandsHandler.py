@@ -14,6 +14,7 @@ from fuzzywuzzy import process
 from Tracer import Tracer
 from CONFIG import *
 from threading import Thread
+from pynput.keyboard import Key, Controller
 
 
 def wrapper(method):
@@ -34,6 +35,7 @@ def wrapper(method):
 class CommandsHandler(Tracer):
     def __init__(self, sound_manager, gpt_proxy):
         super().__init__()
+        self.keyboard = Controller()
         self.sound_manager = sound_manager
         self.gpt_proxy = gpt_proxy
         self.translator = Translator()
@@ -63,6 +65,7 @@ class CommandsHandler(Tracer):
             'спасибо': self.thank,
             'крипта': self.get_wallets,
             'ожидание': self.wait,
+            'удали почту': self.clean_mail,
         }
 
     def start_speechRecognizer(self, stream):
@@ -155,7 +158,6 @@ class CommandsHandler(Tracer):
         for app in work_apps:
             os.system(f'open -a "{app.strip()}"')
             self.log(f'открываю {app.strip()}...')
-            time.sleep(1)
 
         self.sound_manager.speak('рабочий режим активирован ✅')
 
@@ -290,26 +292,46 @@ class CommandsHandler(Tracer):
 
     @wrapper
     def wait(self):
-        self.sound_manager.speak('режим ожидания активирован на 1 час ✅')
+        self.sound_manager.speak('пойду посплю пару часиков ✅')
         old_time = time.time()
         ten_min = 600
         thirty_min = ten_min * 3
-        fifty_min = ten_min * 5
         hour = ten_min * 6
+        hour_fifty_min = hour + (ten_min * 5)
+        two_hours = hour * 2
 
         while True:
             current_time = time.time()
             dif = round(current_time - old_time)
 
-            if dif == ten_min:
-                self.log('в ожидании 10 минут... 💤')
-            elif dif == thirty_min:
+            if dif == thirty_min:
                 self.log('в ожидании 30 минут... 💤')
-            elif dif == fifty_min:
-                self.log('в ожидании 50 минут, скоро пробуждение... ☀️')
             elif dif == hour:
+                self.log('в ожидании 1 час... 💤')
+            elif dif == hour_fifty_min:
+                self.log('в ожидании 1 час 50 минут, скоро пробуждение... ☀️')
+            elif dif == two_hours:
                 self.sound_manager.speak('и я снова тут 💁‍♀️')
                 self.restart_wakeWordDetector()
                 break
 
             time.sleep(1)
+
+    @wrapper
+    def clean_mail(self):
+        os.system('open -a mail')
+        time.sleep(2)
+        self.keyboard.press(Key.cmd)
+        self.keyboard.press('a')
+        time.sleep(2)
+        self.keyboard.release(Key.cmd)
+        self.keyboard.release('a')
+        time.sleep(2)
+        self.keyboard.press(Key.cmd)
+        self.keyboard.press(Key.backspace)
+        time.sleep(2)
+        self.keyboard.release(Key.cmd)
+        self.keyboard.release(Key.backspace)
+        time.sleep(2)
+        self.sound_manager.speak('Почту почистила 🧼')
+        os.system('pkill Mail')
