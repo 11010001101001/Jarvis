@@ -9,5 +9,3 @@ from CONFIG import *
 from pynput.keyboard import Key, Controller
 
 keyboard = Controller()
-
-

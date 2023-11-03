@@ -18,7 +18,7 @@ class SpeechRecognizer(Tracer):
         self.q = queue.Queue()
         self.commandsHandler = commandsHandler
         self.sound_manager = sound_manager
-        
+
     def callback(self, indata, frames, time, state):
         self.q.put(bytes(indata))
         self.q.task_done()
@@ -53,3 +53,4 @@ class SpeechRecognizer(Tracer):
             time.sleep(COOL_DOWN)
             self.sound_manager.play('repair')
             self.start_recognizing(restart)
+            self.log('speechRecognizer restarted ✅')

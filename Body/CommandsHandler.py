@@ -64,8 +64,7 @@ class CommandsHandler(Tracer):
             'погода': self.get_weather,
             'спасибо': self.thank,
             'крипта': self.get_wallets,
-            'ожидание': self.wait,
-            'удали почту': self.clean_mail,
+            'ожидание': self.wait
         }
 
     def start_speechRecognizer(self, stream):
@@ -186,6 +185,7 @@ class CommandsHandler(Tracer):
 
     def enable_sleep_mode(self):
         self.sound_manager.speak('включаю режим сна')
+        self.restart_wakeWordDetector()
         os.system('pmset sleepnow')
 
     def reboot_system(self):
@@ -316,22 +316,3 @@ class CommandsHandler(Tracer):
                 break
 
             time.sleep(1)
-
-    @wrapper
-    def clean_mail(self):
-        os.system('open -a mail')
-        time.sleep(2)
-        self.keyboard.press(Key.cmd)
-        self.keyboard.press('a')
-        time.sleep(2)
-        self.keyboard.release(Key.cmd)
-        self.keyboard.release('a')
-        time.sleep(2)
-        self.keyboard.press(Key.cmd)
-        self.keyboard.press(Key.backspace)
-        time.sleep(2)
-        self.keyboard.release(Key.cmd)
-        self.keyboard.release(Key.backspace)
-        time.sleep(2)
-        self.sound_manager.speak('Почту почистила 🧼')
-        os.system('pkill Mail')

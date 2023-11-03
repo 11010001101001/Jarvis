@@ -41,3 +41,4 @@ class WakeWordDetector(Tracer):
             time.sleep(COOL_DOWN)
             self.sound_manager.play('repair')
             self.start_recognition()
+            self.log('wakeWordDetector restarted ✅')
