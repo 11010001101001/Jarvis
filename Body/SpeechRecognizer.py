@@ -52,5 +52,6 @@ class SpeechRecognizer(Tracer):
             self.log('speechRecognizer sleep...')
             time.sleep(COOL_DOWN)
             self.sound_manager.play('repair')
-            self.start_recognizing(restart)
             self.log('speechRecognizer restarted ✅')
+            self.start_recognizing(restart)
+            
