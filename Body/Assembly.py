@@ -19,6 +19,8 @@ class Assembly(ReqInstaller, Tracer):
         commands_handler = CommandsHandler(sound_manager, gpt_proxy)
         speech_recognizer = SpeechRecognizer(commands_handler, sound_manager)
         wake_word_detector = WakeWordDetector(sound_manager, speech_recognizer)
+        commands_handler.wake_word_detector = wake_word_detector
+        wake_word_detector.commands_handler = commands_handler
 
         def run():
             self.is_loading = True

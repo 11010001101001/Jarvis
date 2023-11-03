@@ -51,7 +51,7 @@ class CommandsHandler(Tracer):
         self.commands = {
             'режим работы': self.enable_work_mode,
             'режим отдыха': self.enable_rest_mode,
-            'спящий режим': self.enable_sleep_mode,
+            'спящий режим': self.switch_recognition_mode,
             'перезагрузка': self.reboot_system,
             'выключение': self.shut_down_system,
             'блокировка': self.block_screen,
@@ -190,7 +190,11 @@ class CommandsHandler(Tracer):
                           f'3j46i512j0i433i512j46i512j46i433i512.4476j0j7&sourceid=chrome&ie=UTF-8')
         os.system(f'open -a Safari {search_request}')
 
-    def enable_sleep_mode(self):
+    def switch_recognition_mode(self):
+        self.wake_word_detector.is_sleeping = True
+        self.restart_wakeWordDetector()
+
+    def sleep(self):
         self.sound_manager.speak('включаю режим сна')
         os.system('pmset sleepnow')
 

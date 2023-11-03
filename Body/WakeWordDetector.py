@@ -14,11 +14,16 @@ class WakeWordDetector(Tracer):
         self.recoder = PvRecorder(device_index=-1, frame_length=self.porcupine.frame_length)
         self.speech_recognizer = speech_recognizer
         self.sound_manager = sound_manager
+        self.is_sleeping = None
 
     def start_recognition(self, restart_sound: str = None):
         try:
             self.recoder.start()
             self.sound_manager.play(restart_sound if restart_sound else 'answer')
+
+            if self.is_sleeping:
+                self.is_sleeping = False
+                self.commands_handler.sleep()
 
             while self.recoder.is_recording:
                 keyword_index = self.porcupine.process(self.recoder.read())
@@ -42,4 +47,3 @@ class WakeWordDetector(Tracer):
             self.sound_manager.play('repair')
             self.log('wakeWordDetector restarted ✅')
             self.start_recognition()
-
