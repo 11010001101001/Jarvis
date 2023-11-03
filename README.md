@@ -28,7 +28,7 @@ As I am studying python, i made a challenge for myself: i decided to make my own
 - Айпи адрес (ip adress)
 - крипта (crypto (returns my wallets))
 - Ожидание (stand by for 2 hours)
-- Удали почту ( clean mail )
+  
   ~ if command not in list -> GPT flow
 
 ## Preview ▶️
