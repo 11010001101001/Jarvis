@@ -4,7 +4,6 @@ USER_NAME_RUS = 'Ярослав'
 BASE_DIR = '/Users/yaroslav/Desktop/Jarvis/VoiceAssistant/'
 WORKING_DIR = ''
 ROOT_DIR = f'{BASE_DIR}Body'
-MAIL_DIR = ''
 VOSK_MODEL_PATH = f'{BASE_DIR}Models/vosk-model-small-ru-0.22'
 SOUNDS_PATH = f'{BASE_DIR}Sounds'
 
