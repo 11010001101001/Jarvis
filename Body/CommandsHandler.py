@@ -185,7 +185,6 @@ class CommandsHandler(Tracer):
 
     def enable_sleep_mode(self):
         self.sound_manager.speak('включаю режим сна')
-        self.restart_wakeWordDetector()
         os.system('pmset sleepnow')
 
     def reboot_system(self):
