@@ -165,8 +165,15 @@ class CommandsHandler(Tracer):
         cmd = """osascript -e 'tell application "System Events" to get name of (processes where background only is false)'"""
         opened_apps = os.popen(cmd).read()
 
+        need_left_apps = [
+            'Terminal',
+            'Preview',
+            'Electron',
+            'Safari'
+        ]
+
         for app in opened_apps.split(sep=', '):
-            if 'Terminal' not in app:
+            if app.strip() not in need_left_apps:
                 os.system(f'pkill -x "{app.strip()}"')
                 self.log(f'закрываю {app.strip()}...')
         self.sound_manager.speak('режим отдыха активирован ✅')
