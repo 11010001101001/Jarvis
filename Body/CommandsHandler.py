@@ -33,11 +33,12 @@ def wrapper(method):
 
 
 class CommandsHandler(Tracer):
-    def __init__(self, sound_manager, gpt_proxy):
+    def __init__(self, sound_manager, gpt_proxy, gmail_manager):
         super().__init__()
         self.keyboard = Controller()
         self.sound_manager = sound_manager
         self.gpt_proxy = gpt_proxy
+        self.gmail_manager = gmail_manager
         self.translator = Translator()
         self.recognized_str = None
         self.restart = None
@@ -64,7 +65,8 @@ class CommandsHandler(Tracer):
             'погода': self.get_weather,
             'спасибо': self.thank,
             'крипта': self.get_wallets,
-            'ожидание': self.wait
+            'ожидание': self.wait,
+            'удали почту': self.clear_mail
         }
 
     def start_speechRecognizer(self, stream):
@@ -326,3 +328,7 @@ class CommandsHandler(Tracer):
                 break
 
             time.sleep(1)
+
+    @wrapper
+    def clear_mail(self):
+        self.gmail_manager.clear()

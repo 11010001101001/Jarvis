@@ -4,6 +4,7 @@ from CommandsHandler import CommandsHandler
 from SpeechRecognizer import SpeechRecognizer
 from SoundManager import SoundManager
 from GptProxy import GptProxy
+from GmailManager import GmailManager
 from ReqInstaller import ReqInstaller
 from Tracer import Tracer
 from CONFIG import *
@@ -16,7 +17,8 @@ class Assembly(ReqInstaller, Tracer):
     def build(self):
         sound_manager = SoundManager()
         gpt_proxy = GptProxy(sound_manager)
-        commands_handler = CommandsHandler(sound_manager, gpt_proxy)
+        gmail_manager = GmailManager(sound_manager)
+        commands_handler = CommandsHandler(sound_manager, gpt_proxy, gmail_manager)
         speech_recognizer = SpeechRecognizer(commands_handler, sound_manager)
         wake_word_detector = WakeWordDetector(sound_manager, speech_recognizer)
         commands_handler.wake_word_detector = wake_word_detector
