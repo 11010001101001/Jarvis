@@ -37,7 +37,8 @@ class GmailManager(Tracer):
         try:
             service = build('gmail', 'v1', credentials=creds)
             results = service.users().messages().list(userId='me',
-                                                      labelIds=['INBOX', 'TRASH', 'SPAM', 'SENT']).execute()
+                                                      labelIds=['INBOX', 'SENT'],
+                                                      includeSpamTrash=True).execute()
             messages = results.get('messages', [])
 
             if not messages:
