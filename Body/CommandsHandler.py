@@ -52,10 +52,10 @@ class CommandsHandler(Tracer):
         self.commands = {
             'режим работы': self.enable_work_mode,
             'режим отдыха': self.enable_rest_mode,
-            'спящий режим': self.switch_recognition_mode,
-            'перезагрузка': self.reboot_system,
-            'выключение': self.shut_down_system,
-            'блокировка': self.block_screen,
+            'спящий режим': self.switch_recognition,
+            'перезагрузка': self.reboot,
+            'выключение': self.shut_down,
+            'блокировка': self.block,
             'пока': self.turn_off,
             'запуск мать': self.run_mr_mother,
             'стоп мать': self.stop_mr_mother,
@@ -192,29 +192,29 @@ class CommandsHandler(Tracer):
                           f'3j46i512j0i433i512j46i512j46i433i512.4476j0j7&sourceid=chrome&ie=UTF-8')
         os.system(f'open -a Safari {search_request}')
 
-    def switch_recognition_mode(self):
+    def switch_recognition(self):
         self.wake_word_detector.is_sleeping = True
         self.restart_wakeWordDetector()
 
     def sleep(self):
         self.sound_manager.speak('включаю режим сна')
+        time.sleep(1)
         os.system('pmset sleepnow')
 
-    def reboot_system(self):
+    def reboot(self):
         self.sound_manager.speak('перезагрузка начнется через минуту')
         subprocess.call(['osascript', '-e', 'tell app "loginwindow" to «event aevtrrst»'])
         self.sound_manager.play('confirmation')
         self.turn_off()
 
-    def shut_down_system(self):
+    def shut_down(self):
         self.sound_manager.speak('выключение произойдет через минуту')
         subprocess.call(['osascript', '-e', 'tell app "loginwindow" to «event aevtrsdn»'])
         self.stop_mr_mother()
         self.sound_manager.play('confirmation')
         self.turn_off()
 
-    @wrapper
-    def block_screen(self):
+    def block(self):
         self.sound_manager.play('lock')
         os.system('pmset displaysleepnow')
 
@@ -271,13 +271,9 @@ class CommandsHandler(Tracer):
 
     @wrapper
     def stop_mr_mother(self):
-        def get_mr_mother_pid():
-            with open('/Users/yaroslav/Desktop/MrMother/pid.txt', 'r') as f:
-                p = f.read()
-                return p
-
-        pid = get_mr_mother_pid()
-        os.system(f'kill {pid}')
+        with open('/Users/yaroslav/Desktop/MrMother/pid.txt', 'r') as f:
+            pid = f.read()
+            os.system(f'kill {pid}')
 
     @wrapper
     def get_definition(self):
