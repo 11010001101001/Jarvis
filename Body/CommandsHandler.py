@@ -328,3 +328,5 @@ class CommandsHandler(Tracer):
     @wrapper
     def clear_mail(self):
         self.gmail_manager.clear()
+        os.system(f'pkill -x "Mail"')
+
