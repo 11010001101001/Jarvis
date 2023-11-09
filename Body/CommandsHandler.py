@@ -176,7 +176,7 @@ class CommandsHandler(Tracer):
 
         for app in opened_apps.split(sep=', '):
             if app.strip() not in need_left_apps:
-                os.system(f'pkill -x "{app.strip()}"')
+                os.system(f"""osascript -e 'quit app "{app.strip()}"'""")
                 self.log(f'закрываю {app.strip()}...')
         self.sound_manager.speak('режим отдыха активирован ✅')
 
