@@ -7,10 +7,10 @@ from googleapiclient.errors import HttpError
 from Tracer import Tracer
 from CONFIG import *
 
+creds = None
+
 
 class GmailManager(Tracer):
-    creds = None
-
     def __init__(self, sound_manager):
         super().__init__()
         self.sound_manager = sound_manager
