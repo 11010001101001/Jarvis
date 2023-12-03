@@ -60,13 +60,15 @@ class CommandsHandler(Tracer):
             'запуск мать': self.run_mr_mother,
             'стоп мать': self.stop_mr_mother,
             'айпи адрес': self.get_ip,
-            # 'что такое': self.get_definition, gptProxy for now 
+            'что такое': self.get_definition,
             'поиск': self.open_search,
             'погода': self.get_weather,
             'спасибо': self.thank,
             'крипта': self.get_wallets,
             'ожидание': self.wait,
-            'удали почту': self.clear_mail
+            'удали почту': self.clear_mail,
+            'сделай сборку': self.build_app,
+            'рестарт': self.self_restart
         }
 
     def start_speechRecognizer(self, stream):
@@ -220,6 +222,9 @@ class CommandsHandler(Tracer):
 
     def turn_off(self):
         self.sound_manager.speak('чаао')
+        self.close()
+
+    def close(self):
         pid = os.getpid()
         os.system(f'kill {pid}')
 
@@ -330,3 +335,20 @@ class CommandsHandler(Tracer):
         self.gmail_manager.clear()
         os.system(f'pkill -x "Mail"')
 
+    @wrapper
+    def build_app(self):
+        self.sound_manager.speak('запускаю скрипт сборки приложения...⏳')
+        os.chdir(f'{DEVELOPMENT_DIR}')
+        os.system('cp BUILDER.py Qral')
+        os.chdir(f'{BUILD_APP_DIR}')
+        os.system('python3 BUILDER.py')
+        os.chdir(f'{ROOT_DIR}')
+        self.sound_manager.speak('сборка готова, вроде как, хи хи ♥️')
+
+    @wrapper
+    def self_restart(self):
+        self.sound_manager.speak('перезапускаю все системы...💁‍♀️')
+        os.chdir(f'{BASE_DIR}')
+        os.system('open -a "Jarvis autorun.app"')
+        os.chdir(f'{ROOT_DIR}')
+        self.close()
