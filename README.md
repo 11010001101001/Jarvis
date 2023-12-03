@@ -29,6 +29,8 @@ As I am studying python, i made a challenge for myself: i decided to make my own
 - крипта (crypto (returns my wallets))
 - Ожидание (stand by for 2 hours)
 - Удали почту (clear mail)
+- Рестарт ( restarts itself )
+- Сделай сборку ( runs another build app script )
   
   ~ if command not in list -> GPT flow
 
