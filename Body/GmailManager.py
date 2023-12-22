@@ -32,9 +32,9 @@ class GmailManager(Tracer):
                 token.write(creds.to_json())
 
     def clear(self):
-        self.log_in()
-
         try:
+            self.log_in()
+
             service = build('gmail', 'v1', credentials=creds)
             results = service.users().messages().list(userId='me',
                                                       labelIds=['INBOX'],
@@ -49,6 +49,11 @@ class GmailManager(Tracer):
             service.users().messages().batchDelete(userId="me", body={"ids": msg_ids}).execute()
             self.sound_manager.speak(f'{len(msg_ids)} входящих сообщений, удалила ✅')
 
-        except HttpError as error:
+        except BaseException as error:
             self.log_error(error)
-            self.sound_manager.speak(error_message)
+            self.sound_manager.speak('Пора обновить токен, старый удалила ♥️')
+            os.chdir(f'{BASE_DIR}')
+            os.system('rm -r token.json')
+            os.chdir(f'{ROOT_DIR}')
+            self.commands_handler.restart()
+

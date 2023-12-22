@@ -33,12 +33,11 @@ def wrapper(method):
 
 
 class CommandsHandler(Tracer):
-    def __init__(self, sound_manager, gpt_proxy, gmail_manager):
+    def __init__(self, sound_manager, gpt_proxy):
         super().__init__()
         self.keyboard = Controller()
         self.sound_manager = sound_manager
         self.gpt_proxy = gpt_proxy
-        self.gmail_manager = gmail_manager
         self.translator = Translator()
         self.recognized_str = None
         self.restart = None
